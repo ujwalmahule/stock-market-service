@@ -25,11 +25,11 @@ public class FileRecord {
 	@Column(name="fileName", nullable = false)
 	private String fileName;
 	
-	@Column(name="processed", nullable = false)
-	private boolean processed;
+	@Column(name="state", nullable = false)
+	private int state; //0=new/processing, 1=processed, 2=error
 	
-	@Column(name="error_message")
-	private String errorMessage;
+	@Column(name="message")
+	private String message; //contains processing status or error message
 	
 	@Column(name="company_name")
 	private String companyName;
@@ -72,12 +72,12 @@ public class FileRecord {
 		this.fileName = fileName;
 	}
 
-	public boolean isProcessed() {
-		return processed;
+	public int getState() {
+		return state;
 	}
 
-	public void setProcessed(boolean processed) {
-		this.processed = processed;
+	public void setState(int state) {
+		this.state = state;
 	}
 
 	public String getCompanyName() {
@@ -136,11 +136,11 @@ public class FileRecord {
 		this.fileData = fileData;
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
