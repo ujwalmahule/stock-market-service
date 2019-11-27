@@ -13,10 +13,10 @@ public class ExchangeCompanyId implements Serializable{
 		// default constructor
 	}
 	
-	public ExchangeCompanyId(long courseId, long skillId) {
+	public ExchangeCompanyId(long exchangeId, long companyId) {
 		super();
-		this.exchangeId = courseId;
-		this.companyId = skillId;
+		this.exchangeId = exchangeId;
+		this.companyId = companyId;
 	}
 
 	@Override

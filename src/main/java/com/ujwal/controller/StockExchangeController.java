@@ -1,5 +1,7 @@
 package com.ujwal.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ujwal.exception.ResourceNotFoundException;
+import com.ujwal.model.Sector;
 import com.ujwal.model.StockExchange;
 import com.ujwal.repository.StockExchangeRepository;
 
@@ -25,6 +28,11 @@ public class StockExchangeController {
 	@GetMapping("/{id}")
 	public StockExchange getExchange(@PathVariable(value = "id") long id) {
 		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock Exchange", "id", id));
+	}
+	
+	@GetMapping("/")
+	public List<StockExchange> getExchange() {
+		return repository.findAll();
 	}
 	
 	@PostMapping("/")

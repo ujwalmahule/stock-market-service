@@ -35,7 +35,7 @@ public class StockPriceController {
 											@PathVariable(value = "page") int page, 
 											@PathVariable(value = "size") int size) {
 		
-		return repository.findByCompanyIdAndExchangeIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(companyId, exchangeId, startDate, endDate, PageRequest.of(page, size));
+		return repository.findByCompanyIdAndStockExchangeIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(companyId, exchangeId, startDate, endDate, PageRequest.of(page, size));
 	
 	}
 

@@ -14,7 +14,7 @@ public interface StockPriceRepository extends JpaRepository<StockPrice, Long> {
 	
 	//Page<StockPrice> findByCompanyIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(long id, Calendar t1, Calendar t2, PageRequest page);
 
-	Page<StockPrice> findByCompanyIdAndExchangeIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(long companyId,
+	Page<StockPrice> findByCompanyIdAndStockExchangeIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(long companyId,
 			long exchangeId, LocalDate startDate, LocalDate endDate, PageRequest page);
 	
 }

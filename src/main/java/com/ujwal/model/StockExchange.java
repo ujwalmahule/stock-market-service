@@ -23,7 +23,7 @@ public class StockExchange {
 	@Column(name="address", nullable = false)
 	private String address;
 	
-	@Column(name="remarks", nullable = false)
+	@Column(name="remarks")
 	private String remarks;
 
 	public long getId() {

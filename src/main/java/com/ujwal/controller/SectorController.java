@@ -1,5 +1,7 @@
 package com.ujwal.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,11 @@ public class SectorController {
 	@GetMapping("/{id}")
 	public Sector getSector(@PathVariable(value = "id") long id) {
 		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Sector", "id", id));
+	}
+	
+	@GetMapping("/")
+	public List<Sector> getSector() {
+		return repository.findAll();
 	}
 	
 	@PostMapping("/")

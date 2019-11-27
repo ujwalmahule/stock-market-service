@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,6 +39,7 @@ public class Company {
 	@JoinColumn(name = "sector_id", nullable = false)
 	private Sector sector;
 	
+	@Lob
 	@Column(name="brief_writeup", nullable = false)
 	private String briefWriteup;
 
