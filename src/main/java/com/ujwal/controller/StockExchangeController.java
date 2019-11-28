@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ujwal.exception.ResourceNotFoundException;
-import com.ujwal.model.Sector;
 import com.ujwal.model.StockExchange;
 import com.ujwal.repository.StockExchangeRepository;
 

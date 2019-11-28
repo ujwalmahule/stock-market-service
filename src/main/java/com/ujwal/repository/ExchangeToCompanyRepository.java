@@ -8,5 +8,5 @@ import com.ujwal.model.ExchangeToCompany;
 
 @Repository
 public interface ExchangeToCompanyRepository extends JpaRepository<ExchangeToCompany, ExchangeCompanyId> {
-
+	public ExchangeToCompany findByStockCodeEquals(String code);
 }

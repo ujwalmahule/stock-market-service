@@ -41,7 +41,7 @@ public class FileRecord {
 	private int recordsProcessed;
 	
 	@Column(name="total_records")
-	private String totalRecords;
+	private int totalRecords;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="fromDate")
@@ -104,11 +104,11 @@ public class FileRecord {
 		this.recordsProcessed = recordsProcessed;
 	}
 
-	public String getTotalRecords() {
+	public int getTotalRecords() {
 		return totalRecords;
 	}
 
-	public void setTotalRecords(String totalRecords) {
+	public void setTotalRecords(int totalRecords) {
 		this.totalRecords = totalRecords;
 	}
 
