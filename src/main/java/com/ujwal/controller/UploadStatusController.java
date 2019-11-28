@@ -23,7 +23,7 @@ public class UploadStatusController {
 	
 	@GetMapping("/")
 	public List<FileRecord> getUploadStatus() {
-		return repository.findAll();
+		return repository.findAllByOrderByIdDesc();
 	}
 	
 	@GetMapping("/{page}/{size}")
