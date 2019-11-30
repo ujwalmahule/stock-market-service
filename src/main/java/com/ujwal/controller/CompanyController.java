@@ -1,5 +1,6 @@
 package com.ujwal.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,27 +55,66 @@ public class CompanyController {
 		return repository.findFirst15ByCompanyNameContainsIgnoreCaseOrderByCompanyName(txt);
 	}
 	
+	@Transactional
 	@PostMapping("/")
 	public Company createCompany(@Valid @RequestBody Company company) {
-		return repository.save(company);
+		removeInvalidExchanges(company);
+		Company newCompany = repository.save(company);
+		addExchanges(company, newCompany.getId());
+		return newCompany;
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
 	public Company updateCompany(@PathVariable Long id, @Valid @RequestBody Company company) {
 		return repository.findById(id).map(foundCompany -> {
-			
-			//check if new exchange added
-			for(ExchangeToCompany e2c : company.getExchange()) {
-				Optional<ExchangeToCompany> founde2c = e2cRepo.findById(new ExchangeCompanyId(e2c.getExchangeId(), e2c.getCompanyId()));
-				if(!founde2c.isPresent()) {
-					e2cRepo.save(e2c);
-				}
-			}
-			
+			removeInvalidExchanges(company);
+			addExchanges(company, id);			
+			removeExchanges(company, foundCompany);
 			updateCompany(foundCompany, company);
 			return repository.save(foundCompany);
 		}).orElseThrow(() -> new ResourceNotFoundException("Company", "id", id));
+	}
+
+	private void removeInvalidExchanges(Company company) {
+		List<ExchangeToCompany> newList = new ArrayList<>();
+		for(ExchangeToCompany e2c : company.getExchange()) {
+			if(e2c.getExchangeId()>0 && e2c.getStockCode()!=null && !e2c.getStockCode().trim().isEmpty()) {
+				newList.add(e2c);
+			}
+		}
+		
+		company.setExchange(newList);
+	}
+	
+	private void addExchanges(@Valid Company company, long id) {
+		for(ExchangeToCompany e2c : company.getExchange()) {
+			e2c.setCompanyId(id);
+			Optional<ExchangeToCompany> founde2c = e2cRepo.findById(new ExchangeCompanyId(e2c.getExchangeId(), e2c.getCompanyId()));
+			if(!founde2c.isPresent()) {
+				e2cRepo.save(e2c);
+			}
+		}
+	}
+	
+	private void removeExchanges(@Valid Company company, Company existing) {
+		List<ExchangeToCompany> newList = new ArrayList<>();
+		for(ExchangeToCompany e2c : existing.getExchange()) {
+			boolean delete = true;
+			for(ExchangeToCompany newE2C : company.getExchange()) {
+				if(e2c.getCompanyId() == newE2C.getCompanyId() && e2c.getExchangeId() == newE2C.getExchangeId()) {
+					delete = false;
+					break;
+				}
+			}
+			
+			if(delete) {
+				e2cRepo.delete(e2c);
+			} else {
+				newList.add(e2c);
+			}			
+		}
+		existing.setExchange(newList);
 	}
 
 	private void updateCompany(Company foundCompany, @Valid Company company) {
