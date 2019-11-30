@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -29,13 +30,13 @@ public class Company {
 	@Column(name="board_of_directors", nullable = false)
 	private String boardOfDirectors;
 	
-	@OneToMany(mappedBy = "company")
-	private List<ExchangeToCompany> exchanges;
+	@OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+	private List<ExchangeToCompany> exchange;
 	
 	@Column(name="turnover", nullable = false)
 	private float turnover;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sector_id", nullable = false)
 	private Sector sector;
 	
@@ -76,11 +77,11 @@ public class Company {
 	}
 
 	public List<ExchangeToCompany> getExchange() {
-		return exchanges;
+		return exchange;
 	}
 
 	public void setExchange(List<ExchangeToCompany> exchanges) {
-		this.exchanges = exchanges;
+		this.exchange = exchanges;
 	}
 
 	public float getTurnover() {

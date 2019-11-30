@@ -1,9 +1,10 @@
 package com.ujwal.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,11 +21,11 @@ public class IpoDetails {
 	@Column(name="id")
 	private long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", nullable = false)
 	private Company company;
 		
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "exchange_id", nullable = false)
 	private StockExchange stockExchange;
 	
@@ -34,9 +35,9 @@ public class IpoDetails {
 	@Column(name="total_shares", nullable = false)
 	private int totalShares;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name="open_date", nullable = false)
-	private Calendar openDate;
+	private Date openDate;
 	
 	@Column(name="remarks")
 	private String remarks;
@@ -81,11 +82,11 @@ public class IpoDetails {
 		this.totalShares = totalShares;
 	}
 
-	public Calendar getOpenDate() {
+	public Date getOpenDate() {
 		return openDate;
 	}
 
-	public void setOpenDate(Calendar openDate) {
+	public void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
 

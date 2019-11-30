@@ -1,5 +1,7 @@
 package com.ujwal.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,11 @@ public class IpoDetailsController {
 	@GetMapping("/{id}")
 	public IpoDetails getIpo(@PathVariable(value = "id") long id) {
 		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("IPO Details", "id", id));
+	}
+	
+	@GetMapping("/")
+	public List<IpoDetails> getIpo() {
+		return repository.findAllByOrderByOpenDateDesc();
 	}
 	
 	@PostMapping("/")

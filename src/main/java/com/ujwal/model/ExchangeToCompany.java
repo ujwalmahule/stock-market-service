@@ -30,8 +30,7 @@ public class ExchangeToCompany {
 	@MapsId
 	private Company company;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId
 	private StockExchange exchange;
 	
