@@ -1,10 +1,9 @@
 package com.ujwal.controller;
 
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,15 +26,12 @@ public class StockPriceController {
 		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock Price", "id", id));
 	}
 	
-	@GetMapping("/for-company-date-range/{id}/{exId}/{date1}/{date2}/{page}/{size}")
-	public Page<StockPrice> getPriceByRange(@PathVariable(value = "id") long companyId, 
+	@GetMapping("/for-company-date-range/{id}/{exId}/{date1}/{date2}")
+	public List<StockPrice> getPriceByRange(@PathVariable(value = "id") long companyId, 
 											@PathVariable(value = "exId") long exchangeId,
-											@PathVariable(value = "date1") @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate startDate,
-											@PathVariable(value = "date2") @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate endDate,
-											@PathVariable(value = "page") int page, 
-											@PathVariable(value = "size") int size) {
-		
-		return repository.findByCompanyIdAndStockExchangeIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(companyId, exchangeId, startDate, endDate, PageRequest.of(page, size));
+											@PathVariable(value = "date1") @DateTimeFormat(pattern = "dd.MM.yyyy") Calendar startDate,
+											@PathVariable(value = "date2") @DateTimeFormat(pattern = "dd.MM.yyyy") Calendar endDate) {
+		return repository.findByCompanyIdEqualsAndStockExchangeIdEqualsAndTimestampBetweenOrderByTimestampAsc(companyId, exchangeId, startDate, endDate);
 	
 	}
 

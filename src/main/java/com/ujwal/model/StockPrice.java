@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "STOCK_PRICE")
 public class StockPrice {
@@ -21,10 +23,12 @@ public class StockPrice {
 	@Column(name="id")
 	private long id;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "company_id", nullable = false)
 	private Company company;
 		
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "exchange_id", nullable = false)
 	private StockExchange stockExchange;

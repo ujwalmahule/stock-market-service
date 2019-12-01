@@ -1,9 +1,8 @@
 package com.ujwal.repository;
 
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +13,7 @@ public interface StockPriceRepository extends JpaRepository<StockPrice, Long> {
 	
 	//Page<StockPrice> findByCompanyIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(long id, Calendar t1, Calendar t2, PageRequest page);
 
-	Page<StockPrice> findByCompanyIdAndStockExchangeIdAndTimestampAfterAndTimestampBeforeOrderByTimestampDesc(long companyId,
-			long exchangeId, LocalDate startDate, LocalDate endDate, PageRequest page);
+	List<StockPrice> findByCompanyIdEqualsAndStockExchangeIdEqualsAndTimestampBetweenOrderByTimestampAsc(
+			long companyId, long exchangeId, Calendar startDate, Calendar endDate);
 	
 }
