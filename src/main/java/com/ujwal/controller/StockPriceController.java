@@ -34,5 +34,10 @@ public class StockPriceController {
 		return repository.findByCompanyIdEqualsAndStockExchangeIdEqualsAndTimestampBetweenOrderByTimestampAsc(companyId, exchangeId, startDate, endDate);
 	
 	}
+	
+	@GetMapping("/getLastPrice/{compId}/{exId}")
+	public StockPrice getLastPrice(@PathVariable(value = "compId") long companyId, @PathVariable(value = "exId") long exchangeId) {
+		return repository.getLastPrice(companyId, exchangeId);
+	}
 
 }

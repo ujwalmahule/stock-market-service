@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ujwal.model.StockPrice;
@@ -16,4 +17,6 @@ public interface StockPriceRepository extends JpaRepository<StockPrice, Long> {
 	List<StockPrice> findByCompanyIdEqualsAndStockExchangeIdEqualsAndTimestampBetweenOrderByTimestampAsc(
 			long companyId, long exchangeId, Calendar startDate, Calendar endDate);
 	
+	@Query("SELECT p FROM StockPrice p where p.timestamp = (select max(x.timestamp) from StockPrice x where x.company.id=?1 and x.stockExchange.id=?2)")
+	StockPrice getLastPrice(long companyId, long exchangeId);
 }
