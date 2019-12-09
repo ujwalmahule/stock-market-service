@@ -1,6 +1,7 @@
 package com.ujwal.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,5 +15,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	Page<Company> findAllByOrderByCompanyName(Pageable pageRequest);
 	List<Company> findFirst15ByCompanyNameContainsIgnoreCaseOrderByCompanyName(String search);
+	Optional<Company> findByCompanyName(String name);
 
 }

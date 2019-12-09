@@ -17,6 +17,6 @@ public interface StockPriceRepository extends JpaRepository<StockPrice, Long> {
 	List<StockPrice> findByCompanyIdEqualsAndStockExchangeIdEqualsAndTimestampBetweenOrderByTimestampAsc(
 			long companyId, long exchangeId, Calendar startDate, Calendar endDate);
 	
-	@Query("SELECT p FROM StockPrice p where p.timestamp = (select max(x.timestamp) from StockPrice x where x.company.id=?1 and x.stockExchange.id=?2)")
+	@Query("SELECT p FROM StockPrice p where p.company.id=?1 and p.stockExchange.id=?2  and p.timestamp = (select max(x.timestamp) from StockPrice x where x.company.id=?1 and x.stockExchange.id=?2)")
 	StockPrice getLastPrice(long companyId, long exchangeId);
 }

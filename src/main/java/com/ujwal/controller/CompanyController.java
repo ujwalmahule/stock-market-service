@@ -46,8 +46,8 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/name/{name}")
-	public Company getCompanyByName(@PathVariable(value = "name") long id) {
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Company", "id", id));
+	public Company getCompanyByName(@PathVariable(value = "name") String name) {
+		return repository.findByCompanyName(name).orElseThrow(() -> new ResourceNotFoundException("Company", "name", name));
 	}
 	
 	@GetMapping("/search/{txt}")
